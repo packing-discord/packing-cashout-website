@@ -1,6 +1,6 @@
 import { useStoreState } from 'easy-peasy'
-import React from 'react'
-import { Button } from 'reacthalfmoon';
+import React, { useState } from 'react'
+import { Button, Modal, ModalDialog, ModalContent, ModalTitle, Input } from 'reacthalfmoon';
 import './UserPage.css';
 
 const UserPage = () => {
@@ -10,7 +10,31 @@ const UserPage = () => {
     const userData = useStoreState((state) => state.userData);
     const scoreData = useStoreState((state) => state.scoreData);
 
+    const [isBuyModalOpen, setBuyModalOpen] = useState(false)
+
     return (
+        <>
+        <Modal isOpen={isBuyModalOpen} toggle={()=>{setBuyModalOpen(!isBuyModalOpen)}}>
+            <ModalDialog>
+                <ModalContent>
+                    <ModalTitle>Where should we send the money?</ModalTitle>
+                    <p>Enter your PayPal email address below:</p>
+                    <Input placeholder="paypal@gmail.com" style={{
+                        marginBottom: '20px'
+                    }} />
+                    <div style={{
+                        display: 'flex',
+                        justifyContent: 'space-between'
+                    }}>
+                        <Button onClick={()=>{setBuyModalOpen(!isBuyModalOpen)}}>Cancel</Button>
+                        <Button onClick={()=>{setBuyModalOpen(!isBuyModalOpen)}} style={{
+                            backgroundColor: 'green',
+                            color: 'white'
+                        }}>Confirm</Button>
+                    </div>
+                </ModalContent>
+            </ModalDialog>
+        </Modal>
         <div style={{
             margin: '20px'
         }}>
@@ -32,12 +56,13 @@ const UserPage = () => {
                 <div className="prices-grid">
                     <div style={{
                         padding: '30px',
-                        backgroundColor: !darkmode ? 'rgb(0, 121, 193, 0.1)' : '#0079C1'
+                        backgroundColor: !darkmode ? 'rgb(0, 121, 193, 0.1)' : 'rgb(0, 121, 193, 0.2)',
+                        borderRadius: '10px'
                     }}>
                         <h6 style={{
-                            textAlign: 'center'
+                            textAlign: 'center',
                         }}>
-                            $5 PayPal
+                            <b>$5 Cash (PayPal)</b>
                         </h6>
                         <hr />
                         <div style={{
@@ -51,12 +76,13 @@ const UserPage = () => {
                                 width: '100%',
                                 backgroundColor: !darkmode ? '#0079C1' : '#00457C',
                                 color: 'white'
-                            }}>Buy</Button>
+                            }} onClick={() => scoreData.points > 20 && setBuyModalOpen(true)} disabled={scoreData.points < 20}>Buy for 20 points</Button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        </>
     )
 }
 
