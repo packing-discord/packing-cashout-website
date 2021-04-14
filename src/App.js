@@ -1,8 +1,17 @@
 import './App.css';
-import { PageWrapper, ContentWrapper } from 'reacthalfmoon';
+import { PageWrapper, ContentWrapper, toggleDarkmode } from 'reacthalfmoon';
 import Navbar from './components/Navbar';
+import { useStoreState } from 'easy-peasy';
+import { useEffect } from 'react';
 
 function App() {
+
+  const darkmode = useStoreState((state) => state.darkmode);
+  
+  useEffect(() => {
+    toggleDarkmode(darkmode)
+  }, [darkmode]);
+
   return (
     <PageWrapper withNavbar>
         <Navbar />

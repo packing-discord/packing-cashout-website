@@ -1,14 +1,15 @@
-import React, { useState } from 'react'
-import { Navbar, NavbarNav, NavbarBrand, NavbarContent, Switch, toggleDarkmode } from 'reacthalfmoon';
+import React from 'react'
+import { useStoreState, useStoreActions } from 'easy-peasy';
+import { Navbar, NavbarNav, NavbarBrand, NavbarContent, Switch } from 'reacthalfmoon';
 
 const PackingNavbar = () => {
 
-    const [darkmode, setDarkmode] = useState(false);
+    const darkmode = useStoreState((state) => state.darkmode);
+    const setDarkmode = useStoreActions((actions) => actions.setDarkmode);
+    
+    const userData = useStoreState((state) => state.userData);
 
-    const handleToggleDarkmode = () => {
-        setDarkmode(!darkmode);
-        toggleDarkmode(!darkmode);
-    }
+    const handleToggleDarkmode = () => setDarkmode(!darkmode);
 
     return (
         <Navbar>
@@ -21,22 +22,22 @@ const PackingNavbar = () => {
                     Packing Discord
                 </NavbarBrand>
                 <NavbarNav>
-                <Switch 
-                    checked={darkmode} 
-                    toggle={()=> handleToggleDarkmode()}
-                    style={{
-                        marginRight: '10px'
-                    }}
-                >
-                    Darkmode
-                </Switch> 
-                  <div style={{
-                    padding: '10px',
-                    borderRadius: '4px',
-                    border: '1px solid orange'
-                  }}>
-                    Androz#2091
-                  </div>
+                    <Switch 
+                        checked={!darkmode} 
+                        toggle={()=> handleToggleDarkmode()}
+                        style={{
+                            marginRight: '10px'
+                        }}
+                    >
+                        Darkmode
+                    </Switch>
+                    {userData && <div style={{
+                        padding: '10px',
+                        borderRadius: '4px',
+                        border: '1px solid orange'
+                    }}>
+                        Androz#2091
+                    </div>}
                 </NavbarNav>
             </NavbarContent>
         </Navbar>
