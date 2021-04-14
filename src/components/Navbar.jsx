@@ -36,7 +36,7 @@ const PackingNavbar = () => {
                         borderRadius: '4px',
                         border: '1px solid orange'
                     }}>
-                        Androz#2091
+                        {userData.username}
                     </div>}
                 </NavbarNav>
             </NavbarContent>
