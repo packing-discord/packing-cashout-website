@@ -11,6 +11,7 @@ function App() {
   const userData = useStoreState((state) => state.userData);
   const darkmode = useStoreState((state) => state.darkmode);
 
+  const login = useStoreActions((actions) => actions.login);
   const setLoginLoading = useStoreActions((actions) => actions.setLoginLoading);
   
   useEffect(() => {
