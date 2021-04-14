@@ -9,8 +9,9 @@ const store = createStore(persist({
         state.loginLoading = payload;
     }),
     login: action((state, payload) => {
-        state.userData = payload.userData;
-        state.scoreData = payload.scoreData
+        state.userData = payload.data.userData;
+        state.scoreData = payload.data.scoreData;
+        state.jwt = payload.jwt;
     }),
     darkmode: false,
     setDarkmode: action((state, toggled) => {

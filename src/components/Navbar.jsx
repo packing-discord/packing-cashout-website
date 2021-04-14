@@ -36,7 +36,7 @@ const PackingNavbar = () => {
                         borderRadius: '4px',
                         border: '1px solid orange'
                     }}>
-                        {userData.username}
+                        {userData.username}#{userData.discriminator}
                     </div>}
                 </NavbarNav>
             </NavbarContent>

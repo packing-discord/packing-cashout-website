@@ -1,0 +1,9 @@
+.prices-grid {
+    display: grid;
+}
+
+@media (min-width: 1080px) {
+    .prices-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}

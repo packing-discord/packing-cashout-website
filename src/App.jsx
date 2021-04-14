@@ -24,13 +24,15 @@ function App() {
       fetch(process.env.REACT_APP_API_URL+'/auth/login?code='+code).then((res) => {
         res.json().then((data) => {
           console.log(data)
-          if (data.error) {
-            setLoginLoading(false);
+          setLoginLoading(false);
+          if (!data.error) {
+            console.log('Logged in!');
+            login(data);
           }
         });
       });
     }
-  }, [setLoginLoading])
+  }, [setLoginLoading, login])
 
   return (
     <PageWrapper withNavbar>
