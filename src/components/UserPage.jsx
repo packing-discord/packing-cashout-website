@@ -55,7 +55,7 @@ const UserPage = () => {
                 <p>Rewards can be bought using points!  Click on "Buy" and claim the money on PayPal!</p>
                 <div className="prices-grid">
                     <div style={{
-                        padding: '30px',
+                        padding: '10px',
                         backgroundColor: !darkmode ? 'rgb(0, 121, 193, 0.1)' : 'rgb(0, 121, 193, 0.2)',
                         borderRadius: '10px'
                     }}>

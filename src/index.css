@@ -1,1 +1,5 @@
 @import url("https://cdn.jsdelivr.net/npm/halfmoon@1.1.0/css/halfmoon.min.css");
+
+.darkmode-toggler {
+  outline: none !important;
+}

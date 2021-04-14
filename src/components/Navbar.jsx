@@ -1,6 +1,7 @@
 import React from 'react'
 import { useStoreState, useStoreActions } from 'easy-peasy';
-import { Navbar, NavbarNav, NavbarBrand, NavbarContent, Switch } from 'reacthalfmoon';
+import { Navbar, NavbarNav, NavbarBrand, NavbarContent } from 'reacthalfmoon';
+import DarkModeToggle from "react-dark-mode-toggle";
 
 const PackingNavbar = () => {
 
@@ -21,21 +22,24 @@ const PackingNavbar = () => {
                 <NavbarBrand>
                     Packing Discord
                 </NavbarBrand>
+                <DarkModeToggle
+                    onChange={handleToggleDarkmode}
+                    checked={!darkmode}
+                    size={60}
+                    className="darkmode-toggler"
+                />
                 <NavbarNav>
-                    <Switch 
-                        checked={!darkmode} 
-                        toggle={()=> handleToggleDarkmode()}
-                        style={{
-                            marginRight: '10px'
-                        }}
-                    >
-                        Darkmode
-                    </Switch>
                     {userData && <div style={{
                         padding: '10px',
-                        borderRadius: '4px',
-                        border: '1px solid orange'
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center'
                     }}>
+                        <img src={userData.avatarURL} alt="user" style={{
+                            borderRadius: '50%',
+                            height: '30px',
+                            marginRight: '10px'
+                        }} />
                         {userData.username}#{userData.discriminator}
                     </div>}
                 </NavbarNav>
