@@ -9112,6 +9112,11 @@ react@^17.0.2:
     loose-envify "^1.1.0"
     object-assign "^4.1.1"
 
+reacthalfmoon@^0.5.0:
+  version "0.5.0"
+  resolved "https://registry.npmjs.org/reacthalfmoon/-/reacthalfmoon-0.5.0.tgz#5fd1fe1a781909ea6a156224900f6ef4038a814e"
+  integrity sha512-eWj0xfzJw4Ha7Le5Hi3gYPxl8t9E+FjMpkMwxoN2SObVA/ythES2nTpePXRL6Q937BppvXTU5KqeCf9KxVD3uQ==
+
 read-pkg-up@^2.0.0:
   version "2.0.0"
   resolved "https://registry.npmjs.org/read-pkg-up/-/read-pkg-up-2.0.0.tgz#6b72a8048984e0c41e79510fd5e9fa99b3b549be"
