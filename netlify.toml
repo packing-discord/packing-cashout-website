@@ -7,3 +7,7 @@
     REACT_APP_REDIRECT_URI="https://packing-cashout.netlify.app/login"
     REACT_APP_API_URL="http://139.99.171.130:3700"
 
+[[redirects]]
+    from = "/*"
+    to = "/"
+    status = 200
