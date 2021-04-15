@@ -25,6 +25,7 @@ const store = createStore(persist({
         state.userData = payload.data.userData;
         state.scoreData = payload.data.scoreData;
         state.history = payload.data.history;
+        state.products = payload.data.products;
         state.jwt = payload.jwt;
     }),
     logout: action((state) => {
