@@ -150,7 +150,7 @@ const UserPage = () => {
                                 <td>{new Date(entry.created_at).toLocaleDateString()}</td>
                                 <td>{!entry.paid ? <b style={{
                                     color: 'orange'
-                                }}>Processing...</b> : <b color={{
+                                }}>Processing...</b> : <b style={{
                                     color: 'green'
                                 }}>Paid</b>}</td>
                             </tr>
