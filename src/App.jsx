@@ -5,21 +5,34 @@ import { useStoreActions, useStoreState } from 'easy-peasy';
 import { useEffect } from 'react';
 import UserPage from './components/UserPage';
 import LoginPage from './components/LoginPage';
+import { fetchScore } from './api';
 
 function App() {
 
   const userData = useStoreState((state) => state.userData);
+  const jwt = useStoreState((state) => state.jwt);
   const darkmode = useStoreState((state) => state.darkmode);
 
   const login = useStoreActions((actions) => actions.login);
   const setLoginLoading = useStoreActions((actions) => actions.setLoginLoading);
+  const updateScore = useStoreActions((actions) => actions.updateScore);
   
   useEffect(() => {
     toggleDarkmode(darkmode)
   }, [darkmode]);
 
   useEffect(() => {
+    if (userData) {
+      fetchScore(jwt).then((score) => {
+        console.log('Score updated', score)
+        updateScore(score);
+      });
+    }
+  });
+
+  useEffect(() => {
     if (window.location.href.includes('?code=')) {
+      window.location.href = window.location.href.slice(0, window.location.href.indexOf('?'))
       setLoginLoading(true);
       const code = window.location.href.split('?code=')[1];
       fetch(process.env.REACT_APP_API_URL+'/auth/login?code='+code).then((res) => {

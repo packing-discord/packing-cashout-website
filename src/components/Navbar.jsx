@@ -1,12 +1,13 @@
 import React from 'react'
 import { useStoreState, useStoreActions } from 'easy-peasy';
-import { Navbar, NavbarNav, NavbarBrand, NavbarContent } from 'reacthalfmoon';
+import { Navbar, NavbarNav, NavbarBrand, NavbarContent, Button } from 'reacthalfmoon';
 import DarkModeToggle from "react-dark-mode-toggle";
 
 const PackingNavbar = () => {
 
     const darkmode = useStoreState((state) => state.darkmode);
     const setDarkmode = useStoreActions((actions) => actions.setDarkmode);
+    const logout = useStoreActions((actions) => actions.logout);
     
     const userData = useStoreState((state) => state.userData);
 
@@ -19,7 +20,11 @@ const PackingNavbar = () => {
               display: 'flex',
               justifyContent: 'space-between'
             }}>
-                <NavbarBrand>
+                <NavbarBrand style={{
+                    textOverflow: 'ellipsis',
+                    whiteSpace: 'nowrap',
+                    overflow: 'hidden'
+                }}>
                     Packing Discord
                 </NavbarBrand>
                 <DarkModeToggle
@@ -40,7 +45,10 @@ const PackingNavbar = () => {
                             height: '30px',
                             marginRight: '10px'
                         }} />
-                        {userData.username}#{userData.discriminator}
+                        <p>{userData.username}#{userData.discriminator}</p>
+                        <Button style={{
+                            marginLeft: '10px'
+                        }} onClick={logout}>Logout</Button>
                     </div>}
                 </NavbarNav>
             </NavbarContent>
