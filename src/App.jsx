@@ -59,7 +59,11 @@ function App() {
     <PageWrapper withNavbar withStickyAlert>
         <Navbar />
         <ContentWrapper>
-          {appLoading ? <LoadingAnimation /> : userData ? <UserPage /> : <LoginPage />}
+          {appLoading ? <div style={{
+            display: 'grid',
+            placeItems: 'center',
+            height: '100%'
+          }}><LoadingAnimation size={20} /></div> : userData ? <UserPage /> : <LoginPage />}
         </ContentWrapper>
     </PageWrapper>
   );
