@@ -2,9 +2,10 @@ import './App.css';
 import { PageWrapper, ContentWrapper, toggleDarkmode } from 'reacthalfmoon';
 import Navbar from './components/Navbar';
 import { useStoreActions, useStoreState } from 'easy-peasy';
-import { useEffect } from 'react';
+import { useEffect   } from 'react';
 import UserPage from './components/UserPage';
 import LoginPage from './components/LoginPage';
+import LoadingAnimation from './components/LoadingAnimation';
 import { fetchScore } from './api';
 
 function App() {
@@ -13,8 +14,10 @@ function App() {
   const jwt = useStoreState((state) => state.jwt);
   const darkmode = useStoreState((state) => state.darkmode);
 
+  const appLoading = useStoreState((state) => state.appLoading);
+  const setAppLoading = useStoreActions((actions) => actions.setAppLoading);
+
   const login = useStoreActions((actions) => actions.login);
-  const setLoginLoading = useStoreActions((actions) => actions.setLoginLoading);
   const updateScore = useStoreActions((actions) => actions.updateScore);
   
   useEffect(() => {
@@ -23,22 +26,26 @@ function App() {
 
   useEffect(() => {
     if (userData) {
+      console.log('Fetching score');
+      setAppLoading(true);
       fetchScore(jwt).then((score) => {
         console.log('Score updated', score)
         updateScore(score);
+        setAppLoading(false);
       });
     }
-  });
+  }, [userData]);
 
   useEffect(() => {
     if (window.location.href.includes('?code=')) {
-      window.location.href = window.location.href.slice(0, window.location.href.indexOf('?'))
-      setLoginLoading(true);
+      console.log('Code detected. Logging in...');
+      setAppLoading(true);
       const code = window.location.href.split('?code=')[1];
       fetch(process.env.REACT_APP_API_URL+'/auth/login?code='+code).then((res) => {
+        window.history.pushState({}, document.title, "/");
         res.json().then((data) => {
           console.log(data)
-          setLoginLoading(false);
+          setAppLoading(false);
           if (!data.error) {
             console.log('Logged in!');
             login(data);
@@ -46,13 +53,13 @@ function App() {
         });
       });
     }
-  }, [setLoginLoading, login])
+  }, []);
 
   return (
     <PageWrapper withNavbar>
         <Navbar />
         <ContentWrapper>
-          {userData ? <UserPage /> : <LoginPage />}
+          {appLoading ? <LoadingAnimation /> : userData ? <UserPage /> : <LoginPage />}
         </ContentWrapper>
     </PageWrapper>
   );

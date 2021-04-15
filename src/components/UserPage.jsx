@@ -11,6 +11,7 @@ const UserPage = () => {
     const scoreData = useStoreState((state) => state.scoreData);
 
     const [isBuyModalOpen, setBuyModalOpen] = useState(false)
+    const [emailAddress, setEmailAddress] = useState(userData.email);
 
     return (
         <>
@@ -19,7 +20,7 @@ const UserPage = () => {
                 <ModalContent>
                     <ModalTitle>Where should we send the money?</ModalTitle>
                     <p>Enter your PayPal email address below:</p>
-                    <Input placeholder="paypal@gmail.com" style={{
+                    <Input value={emailAddress} onChange={setEmailAddress} style={{
                         marginBottom: '20px'
                     }} />
                     <div style={{

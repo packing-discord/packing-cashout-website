@@ -4,12 +4,12 @@ const store = createStore(persist({
     userData: null,
     scoreData: null,
     jwt: null,
-    loginLoading: false,
+    appLoading: false,
     updateScore: action((state, payload) => {
         state.scoreData = payload;
     }),
-    setLoginLoading: action((state, payload) => {
-        state.loginLoading = payload;
+    setAppLoading: action((state, toggled) => {
+        state.appLoading = toggled;
     }),
     login: action((state, payload) => {
         state.userData = payload.data.userData;
