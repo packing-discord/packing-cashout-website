@@ -6,7 +6,7 @@ import { useEffect   } from 'react';
 import UserPage from './components/UserPage';
 import LoginPage from './components/LoginPage';
 import LoadingAnimation from './components/LoadingAnimation';
-import { fetchScore } from './api';
+import { fetchUpdate } from './api';
 
 function App() {
 
@@ -18,7 +18,7 @@ function App() {
   const setAppLoading = useStoreActions((actions) => actions.setAppLoading);
 
   const login = useStoreActions((actions) => actions.login);
-  const updateScore = useStoreActions((actions) => actions.updateScore);
+  const update = useStoreActions((actions) => actions.update);
   
   useEffect(() => {
     toggleDarkmode(darkmode)
@@ -26,11 +26,11 @@ function App() {
 
   useEffect(() => {
     if (userData) {
-      console.log('Fetching score');
+      console.log('Fetching new data');
       setAppLoading(true);
-      fetchScore(jwt).then((score) => {
-        console.log('Score updated', score)
-        updateScore(score);
+      fetchUpdate(jwt).then((data) => {
+        console.log('Data updated', data)
+        update(data);
         setAppLoading(false);
       });
     }

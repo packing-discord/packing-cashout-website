@@ -9,6 +9,7 @@ const UserPage = () => {
 
     const userData = useStoreState((state) => state.userData);
     const scoreData = useStoreState((state) => state.scoreData);
+    const products = useStoreState((state) => state.products);
 
     const [isBuyModalOpen, setBuyModalOpen] = useState(false)
     const [emailAddress, setEmailAddress] = useState(userData.email);
@@ -55,31 +56,35 @@ const UserPage = () => {
                 <h4>Rewards</h4>
                 <p>Rewards can be bought using points!  Click on "Buy" and claim the money on PayPal!</p>
                 <div className="prices-grid">
-                    <div style={{
-                        padding: '10px',
-                        backgroundColor: !darkmode ? 'rgb(0, 121, 193, 0.1)' : 'rgb(0, 121, 193, 0.2)',
-                        borderRadius: '10px'
-                    }}>
-                        <h6 style={{
-                            textAlign: 'center',
-                        }}>
-                            <b>$5 Cash (PayPal)</b>
-                        </h6>
-                        <hr />
-                        <div style={{
-                            textAlign: 'center'
-                        }}>
-                            <img src={process.env.PUBLIC_URL + '/paypal.png'} alt="PayPal" />
-                        </div>
-                        <hr />
-                        <div>
-                            <Button style={{
-                                width: '100%',
-                                backgroundColor: !darkmode ? '#0079C1' : '#00457C',
-                                color: 'white'
-                            }} onClick={() => scoreData.points > 20 && setBuyModalOpen(true)} disabled={scoreData.points < 20}>Buy for 20 points</Button>
-                        </div>
-                    </div>
+                    {products.map((product) => {
+                        return (
+                            <div key={product.id} style={{
+                                padding: '10px',
+                                backgroundColor: !darkmode ? 'rgb(0, 121, 193, 0.1)' : 'rgb(0, 121, 193, 0.2)',
+                                borderRadius: '10px'
+                            }}>
+                                <h6 style={{
+                                    textAlign: 'center',
+                                }}>
+                                    <b>{product.name}</b>
+                                </h6>
+                                <hr />
+                                <div style={{
+                                    textAlign: 'center'
+                                }}>
+                                    <img src={process.env.PUBLIC_URL + '/paypal.png'} alt="PayPal" />
+                                </div>
+                                <hr />
+                                <div>
+                                    <Button style={{
+                                        width: '100%',
+                                        backgroundColor: !darkmode ? '#0079C1' : '#00457C',
+                                        color: 'white'
+                                    }} onClick={() => scoreData.points > product.points && setBuyModalOpen(true)} disabled={scoreData.points < product.points}>Buy for {product.points} points</Button>
+                                </div>
+                            </div>
+                        )
+                    })}
                 </div>
             </div>
         </div>

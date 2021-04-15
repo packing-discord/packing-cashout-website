@@ -14,6 +14,6 @@ const request = (token, path, method, body) => {
     })
 };
 
-export const fetchScore = (token) => {
-    return request(token, '/score', 'GET');
+export const fetchUpdate = (token) => {
+    return request(token, '/update', 'GET');
 };

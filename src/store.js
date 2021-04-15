@@ -5,8 +5,10 @@ const store = createStore(persist({
     scoreData: null,
     jwt: null,
     appLoading: false,
-    updateScore: action((state, payload) => {
-        state.scoreData = payload;
+    products: [],
+    update: action((state, payload) => {
+        state.scoreData = payload.scoreData;
+        state.products = payload.products;
     }),
     setAppLoading: action((state, toggled) => {
         state.appLoading = toggled;
