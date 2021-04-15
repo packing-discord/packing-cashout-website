@@ -1,0 +1,9 @@
+[build]
+  command = "yarn build"
+  publish = "build"
+
+[context.production.environment]
+    REACT_APP_CLIENT_ID="831962751261081622"
+    REACT_APP_REDIRECT_URI="https://packing-cashout.netlify.app/login"
+    REACT_APP_API_URL="http://139.99.171.130:3700"
+
