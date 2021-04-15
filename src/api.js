@@ -2,9 +2,10 @@ const request = (token, path, method, body) => {
     return new Promise((resolve) => {
         fetch(`${process.env.REACT_APP_API_URL}${path}`, {
             method,
-            body: method === 'POST' ? body : undefined,
+            body: method === 'POST' ? JSON.stringify(body) : undefined,
             headers: {
-                'Authorization': `Bearer ${token}`
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
             }
         }).then((res) => {
             res.json().then((data) => {
@@ -17,3 +18,10 @@ const request = (token, path, method, body) => {
 export const fetchUpdate = (token) => {
     return request(token, '/update', 'GET');
 };
+
+export const buyProduct = (token, productID, emailAddress) => {
+    return request(token, '/buy', 'POST', {
+        productID,
+        emailAddress
+    });
+}

@@ -56,7 +56,7 @@ function App() {
   }, []);
 
   return (
-    <PageWrapper withNavbar>
+    <PageWrapper withNavbar withStickyAlert>
         <Navbar />
         <ContentWrapper>
           {appLoading ? <LoadingAnimation /> : userData ? <UserPage /> : <LoginPage />}

@@ -1,18 +1,49 @@
-import { useStoreState } from 'easy-peasy'
+import { useStoreState, useStoreActions } from 'easy-peasy'
 import React, { useState } from 'react'
-import { Button, Modal, ModalDialog, ModalContent, ModalTitle, Input } from 'reacthalfmoon';
+import { Button, Modal, ModalDialog, ModalContent, ModalTitle, Input, stickyAlert } from 'reacthalfmoon';
+import { buyProduct } from '../api';
 import './UserPage.css';
 
 const UserPage = () => {
 
     const darkmode = useStoreState((state) => state.darkmode);
 
+    const jwt = useStoreState((state) => state.jwt);
     const userData = useStoreState((state) => state.userData);
     const scoreData = useStoreState((state) => state.scoreData);
     const products = useStoreState((state) => state.products);
+    
+    const updateScore = useStoreActions((actions) => actions.updateScore);
 
     const [isBuyModalOpen, setBuyModalOpen] = useState(false)
     const [emailAddress, setEmailAddress] = useState(userData.email);
+
+    const [currentProduct, setCurrentProduct] = useState(null);
+    const [transactionState, setTransactionState] = useState(null);
+    const [transactionError, setTransactionError] = useState(null);
+
+    const showCurrentProductModal = (product) => {
+        setCurrentProduct(product);
+        setBuyModalOpen(true);
+    }
+
+    const handleConfirmClick = () => {
+        setTransactionState('PENDING');
+        buyProduct(jwt, currentProduct.id, emailAddress).then((data) => {
+            if (data.error) {
+                setTransactionState('ERRORED');
+                setTransactionError(data.message || 'Something went wrong');
+            } else {
+                updateScore(data.scoreData)
+                setTransactionState('SUCCESS');
+                setBuyModalOpen(false);
+                stickyAlert({
+                    title: "Success",
+                    content: "Your payment will be processed in the next few hours!"
+                });
+            }
+        });
+    };
 
     return (
         <>
@@ -20,6 +51,7 @@ const UserPage = () => {
             <ModalDialog>
                 <ModalContent>
                     <ModalTitle>Where should we send the money?</ModalTitle>
+                    {transactionError && (<u style={{ color: 'red' }}>{transactionError}</u>)}
                     <p>Enter your PayPal email address below:</p>
                     <Input value={emailAddress} onChange={setEmailAddress} style={{
                         marginBottom: '20px'
@@ -29,10 +61,10 @@ const UserPage = () => {
                         justifyContent: 'space-between'
                     }}>
                         <Button onClick={()=>{setBuyModalOpen(!isBuyModalOpen)}}>Cancel</Button>
-                        <Button onClick={()=>{setBuyModalOpen(!isBuyModalOpen)}} style={{
-                            backgroundColor: 'green',
+                        <Button disabled={transactionState === 'PENDING'} onClick={()=> handleConfirmClick()} style={{
+                            backgroundColor: transactionState === 'ERRORED' ? 'red' : 'green',
                             color: 'white'
-                        }}>Confirm</Button>
+                        }}>{transactionState === 'ERRORED' ? 'Retry' : 'Confirm'}</Button>
                     </div>
                 </ModalContent>
             </ModalDialog>
@@ -80,7 +112,7 @@ const UserPage = () => {
                                         width: '100%',
                                         backgroundColor: !darkmode ? '#0079C1' : '#00457C',
                                         color: 'white'
-                                    }} onClick={() => scoreData.points > product.points && setBuyModalOpen(true)} disabled={scoreData.points < product.points}>Buy for {product.points} points</Button>
+                                    }} onClick={() => scoreData.points >= product.points && showCurrentProductModal(product)} disabled={scoreData.points < product.points}>Buy for {product.points} points</Button>
                                 </div>
                             </div>
                         )

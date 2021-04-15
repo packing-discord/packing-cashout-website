@@ -6,6 +6,9 @@ const store = createStore(persist({
     jwt: null,
     appLoading: false,
     products: [],
+    updateScore: action((state, payload) => {
+        state.scoreData = payload;
+    }),
     update: action((state, payload) => {
         state.scoreData = payload.scoreData;
         state.products = payload.products;
