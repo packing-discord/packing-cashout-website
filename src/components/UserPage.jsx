@@ -140,7 +140,7 @@ const UserPage = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {history.map((entry) => {
+                        {history.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime()).map((entry) => {
                         return (
                             <tr key={entry.id}>
                                 <th>{entry.id}</th>
