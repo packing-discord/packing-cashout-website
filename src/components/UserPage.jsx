@@ -15,6 +15,7 @@ const UserPage = () => {
     const history = useStoreState((state) => state.history);
     
     const updateScore = useStoreActions((actions) => actions.updateScore);
+    const updateHistory = useStoreActions((actions) => actions.updateHistory);
 
     const [isBuyModalOpen, setBuyModalOpen] = useState(false)
     const [emailAddress, setEmailAddress] = useState(userData.email);
@@ -35,7 +36,8 @@ const UserPage = () => {
                 setTransactionState('ERRORED');
                 setTransactionError(data.message || 'Something went wrong');
             } else {
-                updateScore(data.scoreData)
+                updateScore(data.scoreData);
+                updateHistory(data.history);
                 setTransactionState('SUCCESS');
                 setBuyModalOpen(false);
                 stickyAlert({
@@ -54,7 +56,7 @@ const UserPage = () => {
                     <ModalTitle>Where should we send the money?</ModalTitle>
                     {transactionError && (<u style={{ color: 'red' }}>{transactionError}</u>)}
                     <p>Enter your PayPal email address below:</p>
-                    <Input value={emailAddress} onChange={setEmailAddress} style={{
+                    <Input value={emailAddress} onChange={(e) => setEmailAddress(e.target.value)} style={{
                         marginBottom: '20px'
                     }} />
                     <div style={{

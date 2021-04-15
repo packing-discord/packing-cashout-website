@@ -10,6 +10,9 @@ const store = createStore(persist({
     updateScore: action((state, payload) => {
         state.scoreData = payload;
     }),
+    updateHistory: action((state, payload) => {
+        state.history = payload;
+    }),
     update: action((state, payload) => {
         state.scoreData = payload.scoreData;
         state.products = payload.products;
