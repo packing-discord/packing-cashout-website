@@ -11,7 +11,6 @@
     animation: scale .75s cubic-bezier(.2, .68, .18, 1.08) 0s infinite;
 }
 .ball-pulse > div {
-    background-color: #fff;
     border-radius: 100%;
     margin: 2px;
     -webkit-animation-fill-mode: both;
