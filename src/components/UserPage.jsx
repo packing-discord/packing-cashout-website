@@ -106,7 +106,10 @@ const UserPage = () => {
                                 <div style={{
                                     textAlign: 'center'
                                 }}>
-                                    <img src={process.env.PUBLIC_URL + '/paypal.png'} alt="PayPal" />
+                                    <img src={process.env.PUBLIC_URL + '/paypal-icon.webp'} alt="PayPal" style={{
+                                        borderRadius: '50%',
+                                        height: '150px'
+                                    }} />
                                 </div>
                                 <hr />
                                 <div>
@@ -151,7 +154,9 @@ const UserPage = () => {
                             </tr>
                         )})}
                     </tbody>
-                </Table>) : 'There is nothing here... Buy something and it will appear here!'}
+                </Table>) : <p style={{
+                    color: 'gray'
+                }}>There is nothing here... Buy something and it will appear here!</p>}
             </div>
         </div>
         </>
