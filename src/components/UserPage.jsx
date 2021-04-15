@@ -1,6 +1,6 @@
 import { useStoreState, useStoreActions } from 'easy-peasy'
 import React, { useState } from 'react'
-import { Button, Modal, ModalDialog, ModalContent, ModalTitle, Input, stickyAlert } from 'reacthalfmoon';
+import { Button, Modal, ModalDialog, ModalContent, ModalTitle, Input, stickyAlert, Table } from 'reacthalfmoon';
 import { buyProduct } from '../api';
 import './UserPage.css';
 
@@ -12,6 +12,7 @@ const UserPage = () => {
     const userData = useStoreState((state) => state.userData);
     const scoreData = useStoreState((state) => state.scoreData);
     const products = useStoreState((state) => state.products);
+    const history = useStoreState((state) => state.history);
     
     const updateScore = useStoreActions((actions) => actions.updateScore);
 
@@ -93,7 +94,8 @@ const UserPage = () => {
                             <div key={product.id} style={{
                                 padding: '10px',
                                 backgroundColor: !darkmode ? 'rgb(0, 121, 193, 0.1)' : 'rgb(0, 121, 193, 0.2)',
-                                borderRadius: '10px'
+                                borderRadius: '10px',
+                                margin: '20px'
                             }}>
                                 <h6 style={{
                                     textAlign: 'center',
@@ -118,6 +120,38 @@ const UserPage = () => {
                         )
                     })}
                 </div>
+                <h4>History</h4>
+                <p>Here are your previous payments</p>
+                {history.length > 0 ?
+                (<Table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Points</th>
+                            <th>Money</th>
+                            <th>Email (paypal)</th>
+                            <th>Date</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {history.map((entry) => {
+                        return (
+                            <tr key={entry.id}>
+                                <th>{entry.id}</th>
+                                <td>{entry.nb_points}</td>
+                                <td>${products.find((p) => p.id === entry.product_id).paypal}</td>
+                                <td>{entry.email_address}</td>
+                                <td>{new Date(entry.created_at).toLocaleDateString()}</td>
+                                <td>{!entry.paid ? <b style={{
+                                    color: 'orange'
+                                }}>Processing...</b> : <b color={{
+                                    color: 'green'
+                                }}>Paid</b>}</td>
+                            </tr>
+                        )})}
+                    </tbody>
+                </Table>) : 'There is nothing here... Buy something and it will appear here!'}
             </div>
         </div>
         </>

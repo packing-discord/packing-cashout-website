@@ -24,4 +24,8 @@ export const buyProduct = (token, productID, emailAddress) => {
         productID,
         emailAddress
     });
+};
+
+export const fetchHistory = (token) => {
+    return request(token, '/history', 'GET');
 }

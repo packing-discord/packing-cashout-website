@@ -6,12 +6,14 @@ const store = createStore(persist({
     jwt: null,
     appLoading: false,
     products: [],
+    history: [],
     updateScore: action((state, payload) => {
         state.scoreData = payload;
     }),
     update: action((state, payload) => {
         state.scoreData = payload.scoreData;
         state.products = payload.products;
+        state.history = payload.history;
     }),
     setAppLoading: action((state, toggled) => {
         state.appLoading = toggled;
@@ -19,11 +21,13 @@ const store = createStore(persist({
     login: action((state, payload) => {
         state.userData = payload.data.userData;
         state.scoreData = payload.data.scoreData;
+        state.history = payload.data.history;
         state.jwt = payload.jwt;
     }),
     logout: action((state) => {
         state.userData = null;
         state.scoreData = null;
+        state.history = null;
         state.jwt = null;
     }),
     darkmode: false,
