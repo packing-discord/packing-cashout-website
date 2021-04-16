@@ -102,7 +102,7 @@ const UserPage = () => {
                                 <h6 style={{
                                     textAlign: 'center',
                                 }}>
-                                    <b>{product.name}</b>
+                                    <b>${product.paypal} PayPal</b>
                                 </h6>
                                 <hr />
                                 <div style={{
